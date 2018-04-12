@@ -8,7 +8,7 @@ How to use
 
 - Click menu on top left then select setting
 
-For Run parameter you need make path to "proxy.js" or "start.js"
+For Run parameter you need make path to "proxy.js" or "index.js" or "start.js"
 
 Pinkie "node bin/lib/proxy.js"
 
