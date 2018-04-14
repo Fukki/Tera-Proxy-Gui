@@ -13,6 +13,7 @@ https://github.com/Fukki/Tera-Proxy-Gui/releases
 - Autorun when start the GUI<br/>
 - Trayicon when minimize<br/>
 - Enable/Disable modules<br/>
+- console debug print out to file<br/>
 
 **How to use**<br/>
 - Extract the exe to your tera proxy folder<br/>
