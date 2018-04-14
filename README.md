@@ -7,7 +7,6 @@ https://github.com/Fukki/Tera-Proxy-Gui/releases
 ![image](https://user-images.githubusercontent.com/26898177/38770570-32a7817c-403f-11e8-90ae-abb4c957407d.png)
 
 **Feature Now**<br/>
-- Suport all proxy now @_@<br/>
 - Move all console into GUI mode<br/>
 - Autostart when windows startup<br/>
 - Autorun when start the GUI<br/>
