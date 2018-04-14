@@ -19,3 +19,4 @@ Electron include "node_modules\electron\dist\electron.exe start.js"<br/>
 - 1.0 WTF<br/>
 - 1.1 Clear old tera proxy running when start or close, check GUI running<br/>
 - 1.2 Add Fix GUI in tray icon, use when GUI got stuck@_@<br/>
+- 1.3 Load old console when use Fix GUI<br/>
