@@ -12,9 +12,9 @@ For Run parameter you need make path to "proxy.js" or "index.js" or "start.js"<b
 Pinkie "node bin/lib/proxy.js"<br/>
 Caali "node bin/lib/index.js"<br/>
 Electron include "node_modules\electron\dist\electron.exe start.js"<br/>
-<br/>
 ![image](https://user-images.githubusercontent.com/26898177/38706013-d5fb1110-3ed5-11e8-9951-77a8fa43a441.png)
-<br/>
+
+
 **Update**
 - 1.0 WTF<br/>
 - 1.1 Clear old tera proxy running when start or close, check GUI running<br/>
