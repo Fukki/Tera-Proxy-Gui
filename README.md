@@ -1,4 +1,8 @@
 **Just Kappa :v**<br/>
+
+**Download**<br/>
+https://github.com/Fukki/Tera-Proxy-Gui/releases
+
 **Include kappa in this project**<br/>
 ![image](https://user-images.githubusercontent.com/26898177/38770570-32a7817c-403f-11e8-90ae-abb4c957407d.png)
 
@@ -9,9 +13,6 @@
 - Autorun when start the GUI<br/>
 - Trayicon when minimize<br/>
 - Enable/Disable modules<br/>
-
-**Download**<br/>
-https://github.com/Fukki/Tera-Proxy-Gui/releases
 
 **How to use**<br/>
 - Extract the exe to your tera proxy folder<br/>
