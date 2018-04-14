@@ -1,6 +1,9 @@
 **Just Kappa :v**<br/>
 **Include kappa in this project**<br/>
 
+**What is Tera Proxy GUI**<br/>
+![image](https://user-images.githubusercontent.com/26898177/38770488-09318622-403e-11e8-81a6-a14f802de7d0.png)
+
 **Download**<br/>
 https://github.com/Fukki/Tera-Proxy-Gui/releases
 
