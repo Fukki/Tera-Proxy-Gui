@@ -1,7 +1,14 @@
 **Just Kappa :v**<br/>
 **Include kappa in this project**<br/>
 ![image](https://user-images.githubusercontent.com/26898177/38770570-32a7817c-403f-11e8-90ae-abb4c957407d.png)
-![image](https://user-images.githubusercontent.com/26898177/38770637-2024dfe4-4040-11e8-8e1a-946abd18bf26.png)
+
+**Feature Now**<br/>
+- Suport all proxy now @_@<br/>
+- Move all console into GUI mode<br/>
+- Autostart when windows startup<br/>
+- Autorun when start the GUI<br/>
+- Trayicon when minimize<br/>
+- Enable/Disable modules<br/>
 
 **Download**<br/>
 https://github.com/Fukki/Tera-Proxy-Gui/releases
@@ -21,6 +28,6 @@ Electron include "node_modules\electron\dist\electron.exe start.js"<br/>
 **Update**<br/>
 - 1.0 WTF<br/>
 - 1.1 Clear old tera proxy running when start or close, check GUI running<br/>
-- 1.2 Added Fix GUI in tray icon, use when GUI got stuck@_@<br/>
+- 1.2 Added Fix GUI in trayicon, use when GUI got stuck@_@<br/>
 - 1.3 Load old console when use Fix GUI<br/>
 - 1.4 Fixed start/close proxy when use Fix GUI and added GUI Activate when click tray icon<br/>
