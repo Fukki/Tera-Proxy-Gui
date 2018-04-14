@@ -14,6 +14,8 @@ Caali "node bin/lib/index.js"<br/>
 Electron include "node_modules\electron\dist\electron.exe start.js"<br/>
 ![image](https://user-images.githubusercontent.com/26898177/38706013-d5fb1110-3ed5-11e8-9951-77a8fa43a441.png)
 
+![image](https://user-images.githubusercontent.com/26898177/38706013-d5fb1110-3ed5-11e8-9951-77a8fa43a441.png)
+
 
 **Update**
 - 1.0 WTF<br/>
