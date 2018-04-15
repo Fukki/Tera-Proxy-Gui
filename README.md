@@ -32,4 +32,4 @@ Electron include "node_modules\electron\dist\electron.exe start.js"<br/>
 - 1.2 Added Fix GUI in trayicon, use when GUI got stuck@_@<br/>
 - 1.3 Load old console when use Fix GUI<br/>
 - 1.4 Fixed start/close proxy when use Fix GUI and added GUI Activate when click tray icon<br/>
-- 1.5 Fixed tera proxy check running, Fixed GUI on windows 10 (maybe :V)<br/>
+- 1.5 Fixed tera proxy check running, Fixed GUI on windows 10 (maybe :v)<br/>
