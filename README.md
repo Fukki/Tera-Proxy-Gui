@@ -35,4 +35,4 @@ Electron include "node_modules\electron\dist\electron.exe start.js"<br/>
 - 1.4 Fixed start/close proxy when use Fix GUI and added GUI Activate when click tray icon<br/>
 - 1.5 Fixed tera proxy check running, Fixed tera proxy closed when close by another gui without run proxy, Fixed GUI on windows 10 (maybe :v)<br/>
 - 1.6 Fixed CPU used when peak data load from tera proxy into GUI, Fixed Fix GUI function now can select keep or clean console, Fixed GUI change position to top when minimize<br/>
-- 1.7 Fixed when press close proxy button then GUI are closed WTF, Fixed GUI header cant resize now :x, Fixed GUI close when click without any module in list, Fixed console speed when peak data (maybe?), Added Clear Console button, Added right click menu Copy in console
+- 1.7 Fixed when press close proxy button then GUI are closed WTF, Fixed GUI header cant resize now :x, Fixed GUI close when click without any module in list, Fixed console speed when peak data (maybe?), Added Clear Console button, Added right click menu to Copy console only 1 line like ctrl+C so you need ctrl+v to paste it :p
