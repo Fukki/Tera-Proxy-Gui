@@ -14,6 +14,7 @@ https://github.com/Fukki/Tera-Proxy-Gui/releases
 - Trayicon when minimize<br/>
 - Enable/Disable modules<br/>
 - Console print and save to file<br/>
+- Support for Windows or Mac but not linux<br/>
 
 **How to use**<br/>
 - Extract the exe to your tera proxy folder<br/>
