@@ -39,3 +39,4 @@ Electron include "node_modules\electron\dist\electron.exe start.js"<br/>
 - 1.7 Fixed when press close proxy button then GUI are closed WTF, Fixed GUI header cant resize now :x, Fixed GUI close when click without any module in list, Fixed console speed when peak data (maybe?), Added Clear Console button, Added right click menu to Copy console only 1 line like Ctrl+C so you need Ctrl+v to paste it :p<br/>
 - 1.8 Fixed GUI broke on windows 10, Impoved console speed when peak data again :v, Fixed Close Proxy button not work when Start Proxy with wrong parameter, Added multi-select and copy for console<br/>
 - 1.9 Fixed Auto clear console, Fixex process wait timeout for potato computer :/, Moved Proxy_GUI.ini to bin, Rename Electron_Use -> Custom_Application_Use and Electron_Name -> Custom_Application_NAME , Cleaned some code that reduce by 1 kb so look very nice kappa :v
+- 2.0 Add node.exe and custom application running trigger :x
