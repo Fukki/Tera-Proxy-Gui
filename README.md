@@ -40,3 +40,4 @@ Electron include "node_modules\electron\dist\electron.exe start.js"<br/>
 - 1.8 Fixed GUI broke on windows 10, Impoved console speed when peak data again :v, Fixed Close Proxy button not work when Start Proxy with wrong parameter, Added multi-select and copy for console<br/>
 - 1.9 Fixed Auto clear console, Fixex process wait timeout for potato computer :/, Moved Proxy_GUI.ini to bin, Rename Electron_Use -> Custom_Application_Use and Electron_Name -> Custom_Application_NAME , Cleaned some code that reduce by 1 kb so look very nice kappa :v
 - 2.0 Add node.exe and custom application running trigger :x
+- 2.1 Revert Fix Gui, Fixed tera proxy gui can't start after if run from another program
