@@ -41,3 +41,4 @@ Electron include "node_modules\electron\dist\electron.exe start.js"<br/>
 - 1.9 Fixed Auto clear console, Fixex process wait timeout for potato computer :/, Moved Proxy_GUI.ini to bin, Rename Electron_Use -> Custom_Application_Use and Electron_Name -> Custom_Application_NAME , Cleaned some code that reduce by 1 kb so look very nice kappa :v
 - 2.0 Add node.exe and custom application running trigger :x
 - 2.1 Revert Fix Gui, Fixed tera proxy gui can't start after if run from another program
+- 2.2 Removed old concole copy in Fix Gui function, Fixed multiple run GUI and Proxy.
