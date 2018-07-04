@@ -5,11 +5,11 @@
 #AutoIt3Wrapper_UseUpx=y
 #AutoIt3Wrapper_Compile_Both=y
 #AutoIt3Wrapper_Res_Description=[GUI]Tera Proxy
-#AutoIt3Wrapper_Res_Fileversion=2.0.0.2
-#AutoIt3Wrapper_Res_ProductVersion=2.0.0.2
+#AutoIt3Wrapper_Res_Fileversion=2.0.0.3
+#AutoIt3Wrapper_Res_ProductVersion=2.0.0.3
 #AutoIt3Wrapper_Res_LegalCopyright=Fukki
 #AutoIt3Wrapper_Res_Field=CompanyName|Fukki
-#AutoIt3Wrapper_Res_Field=ProductVersion|2.0.0.2
+#AutoIt3Wrapper_Res_Field=ProductVersion|2.0.0.3
 #AutoIt3Wrapper_Res_Field=ProductName|[GUI]Tera Proxy
 #AutoIt3Wrapper_Res_Field=Publisher|[GUI]Tera Proxy
 #AutoIt3Wrapper_Res_Field=LegalTrademarks|Fukki
@@ -45,14 +45,15 @@ Opt("TrayOnEventMode", 1)
 #include '_Startup.au3'
 _SetTheme("DarkTeal")
 _GUICtrlListView_Init_Optim()
-Global $FORM[9] = ['[GUI]Tera Proxy'], $FORM2[17], $FORM3[8], $TRAY[7]
+Global $FORM[10] = ['[GUI]Tera Proxy'], $FORM2[17], $FORM3[8], $FORM4[8], $TRAY[7]
 Global $iPID = 0, $gPID = 0, $iLineSize = 0, $sLine = '', $_isStarted = False, $Module
 Global Const $sTemp = @TempDir & '\[GUI]Tera_Proxy'
 Global Const $_ConfigFile = @ScriptDir & '\bin\Proxy_GUI.ini'
 Global Const $_Config_Region = @ScriptDir & '\bin\config.json'
-If _isRunning() Then
+Global Const $_Module = @ScriptDir & '\bin\node_modules'
+If _CheckPID(True) Then
 	If _Metro_MsgBox(4, $FORM[0], 'Another ' & $FORM[0] & ' has now running...' & @CRLF & 'Do you want to run new ' & $FORM[0] & '?', 400, 11) <> 'Yes' Then Exit
-	_closeRunning()
+	_ClosePID(True)
 EndIf
 $hOpen = FileOpen($_ConfigFile, 0)
 If $hOpen < 0 Then _CreateINI()
@@ -76,25 +77,27 @@ Func _CreateTRAY()
 	TraySetOnEvent($TRAY_EVENT_PRIMARYDOWN, "On_Click")
 EndFunc   ;==>_CreateTRAY
 Func _CreateGUI()
-	$FORM[1] = _Metro_CreateGUI($FORM[0], 715, 468, -1, -1, False)
+	$FORM[1] = _Metro_CreateGUI($FORM[0], 1015, 668, -1, -1, False)
 	$FORM[2] = _Metro_AddControlButtons(True, False, True, False, True)
-	$FORM[3] = GUICtrlCreateListView("", 8, 62, 698, 396, $LVS_REPORT)
+	$FORM[3] = GUICtrlCreateListView("", 8, 62, 998, 596, $LVS_REPORT)
 	$FORM[4] = _Metro_CreateButton("Print", 8, 38, 101, 21)
 	$FORM[5] = _Metro_CreateButton("Clear", 116, 38, 101, 21)
-	$FORM[6] = _Metro_CreateButton('Start Proxy', 505, 38, 201, 21)
-	$FORM[7] = _Metro_CreateButton("Close Proxy", 297, 38, 201, 21)
-	$FORM[8] = GUICtrlGetHandle($FORM[3])
-	_GUICtrlListView_SetExtendedListViewStyle($FORM[8], BitOR($LVS_EX_FULLROWSELECT, $LVS_EX_GRIDLINES, $LVS_EX_INFOTIP))
-	_GUICtrlListView_AddColumn($FORM[8], 'Console', 698, 0)
-	_GUICtrlListView_SetColumnWidth($FORM[8], 0, $LVSCW_AUTOSIZE_USEHEADER)
+	$FORM[6] = _Metro_CreateButton("Hosts", 224, 38, 101, 21)
+	$FORM[7] = _Metro_CreateButton('Start Proxy', 805, 38, 201, 21)
+	$FORM[8] = _Metro_CreateButton("Close Proxy", 597, 38, 201, 21)
+	$FORM[9] = GUICtrlGetHandle($FORM[3])
+	_GUICtrlListView_SetExtendedListViewStyle($FORM[9], BitOR($LVS_EX_FULLROWSELECT, $LVS_EX_GRIDLINES, $LVS_EX_INFOTIP))
+	_GUICtrlListView_AddColumn($FORM[9], 'Console', 698, 0)
+	_GUICtrlListView_SetColumnWidth($FORM[9], 0, $LVSCW_AUTOSIZE_USEHEADER)
 	ControlDisable($FORM[1], "", HWnd(_GUICtrlListView_GetHeader($FORM[3])))
 	_Metro_SetGUIOption($FORM[1], True, False)
 	_ControlEvent($FORM[2])
-	_Metro_DisableButton($FORM[7])
+	_Metro_DisableButton($FORM[8])
 	GUICtrlSetOnEvent($FORM[4], "_PrintConsole")
 	GUICtrlSetOnEvent($FORM[5], "_ClearConsole")
-	GUICtrlSetOnEvent($FORM[6], "_RunProxy")
+	GUICtrlSetOnEvent($FORM[6], "_HostsFileOpen")
 	GUICtrlSetOnEvent($FORM[7], "_RunProxy")
+	GUICtrlSetOnEvent($FORM[8], "_RunProxy")
 	GUISetOnEvent($GUI_EVENT_CLOSE, "_EXIT", $FORM[1])
 	$FORM2[1] = _Metro_CreateGUI($FORM[0], 404, 323, -1, -1, False)
 	$FORM2[2] = _Metro_CreateToggleEx("Auto start when windows startup", 8, 8, 300, 30)
@@ -129,7 +132,7 @@ Func _CreateGUI()
 	$FORM3[2] = GUICtrlCreateListView("", 8, 8, 601, 393)
 	$FORM3[3] = _Metro_CreateButton("All Enable", 8, 408, 129, 21)
 	$FORM3[4] = _Metro_CreateButton("All Disable", 144, 408, 129, 21)
-	$FORM3[5] = _Metro_CreateButton("Reload", 280, 408, 129, 21)
+	$FORM3[5] = _Metro_CreateButton("Refresh", 280, 408, 129, 21)
 	$FORM3[6] = _Metro_CreateButton("Close", 472, 408, 129, 21)
 	$FORM3[7] = GUICtrlGetHandle($FORM3[2])
 	_GUICtrlListView_SetExtendedListViewStyle($FORM3[7], BitOR($LVS_EX_FULLROWSELECT, $LVS_EX_GRIDLINES, $LVS_EX_INFOTIP, $LVS_EX_CHECKBOXES))
@@ -141,9 +144,13 @@ Func _CreateGUI()
 	GUICtrlSetOnEvent($FORM3[5], "_Modules_Get")
 	GUICtrlSetOnEvent($FORM3[6], "_Module_Close")
 	_Metro_SetGUIOption($FORM3[1], True, False)
-	GUICtrlSetResizing($FORM[1], BitOR($GUI_DOCKTOP, $GUI_DOCKLEFT, $GUI_DOCKSIZE))
-	GUICtrlSetResizing($FORM2[1], BitOR($GUI_DOCKTOP, $GUI_DOCKLEFT, $GUI_DOCKSIZE))
-	GUICtrlSetResizing($FORM3[1], BitOR($GUI_DOCKTOP, $GUI_DOCKLEFT, $GUI_DOCKSIZE))
+	$FORM4[1] = _Metro_CreateGUI($FORM[0], 1015, 668, -1, -1, False)
+	$FORM4[2] = GUICtrlCreateEdit("", 8, 62, 998, 596)
+	$FORM4[3] = _Metro_CreateButton('Close', 597, 38, 201, 21)
+	$FORM4[4] = _Metro_CreateButton('Save', 805, 38, 201, 21)
+	GUICtrlSetOnEvent($FORM4[3], "_HostFileClose")
+	GUICtrlSetOnEvent($FORM4[4], "_HostFileSave")
+	_Metro_SetGUIOption($FORM4[1], True, False)
 	GUIRegisterMsg(0x11, "_ForceClose")
 	GUIRegisterMsg($WM_NOTIFY, "WM_NOTIFY")
 	OnAutoItExitRegister('_EXIT')
@@ -154,10 +161,11 @@ Func _FixGUI()
 	_Metro_GUIDelete($FORM[1])
 	_Metro_GUIDelete($FORM2[1])
 	_Metro_GUIDelete($FORM3[1])
+	_Metro_GUIDelete($FORM4[1])
 	_CreateGUI()
 	If $_isStarted Then
-		_Metro_DisableButton($FORM[6])
-		_Metro_EnableButton($FORM[7])
+		_Metro_DisableButton($FORM[7])
+		_Metro_EnableButton($FORM[8])
 		TrayItemSetText($TRAY[1], 'Close Proxy')
 	EndIf
 EndFunc   ;==>_FixGUI
@@ -166,8 +174,8 @@ Func _RunProxy()
 		If _Metro_MsgBox(4, $FORM[0], "Tera Proxy is now running..." & @CRLF & "Do you sure to close it now?", 400, 11, $FORM[1]) = 'Yes' Then
 			$_isStarted = False
 			_ClosePID()
-			_Metro_DisableButton($FORM[7])
-			_Metro_EnableButton($FORM[6])
+			_Metro_DisableButton($FORM[8])
+			_Metro_EnableButton($FORM[7])
 			TrayItemSetText($TRAY[1], 'Start Proxy')
 			_Console('Closed...')
 			$iLineSize = 0
@@ -180,10 +188,10 @@ Func _RunProxy()
 		EndIf
 		$_isStarted = True
 		$iLineSize = 0
-		_Metro_DisableButton($FORM[6])
-		_Metro_EnableButton($FORM[7])
+		_Metro_DisableButton($FORM[7])
+		_Metro_EnableButton($FORM[8])
 		TrayItemSetText($TRAY[1], 'Close Proxy')
-		_GUICtrlListView_DeleteAllItems($FORM[8])
+		_GUICtrlListView_DeleteAllItems($FORM[9])
 		AdlibRegister('_RunProxy_StartProxy', 0)
 	EndIf
 EndFunc   ;==>_RunProxy
@@ -197,41 +205,49 @@ EndFunc   ;==>_RunProxy_StartProxy
 Func _WritePID()
 	Local Const $sDatFile = $sTemp & '\TempPID.dat'
 	Local $hOpen = FileOpen($sDatFile, 10)
-	Local $sData = $iPID
+	Local $sData = @ScriptName & @TAB & @AutoItPID & @CR & 'cmd.exe' & @TAB & $iPID
+	Local $sApp = _isCustomApplication()
 	For $n = 1 To $gPID[0][0]
-		$sData &= @CR & $gPID[$n][1]
+		$sData &= @CR & $sApp & @TAB & $gPID[$n][1]
 	Next
 	FileWrite($hOpen, $sData)
 	FileClose($hOpen)
 EndFunc   ;==>_WritePID
-Func _CheckPID()
-	Local Const $nList = 'cmd.exe, ' & _isCustomApplication()
+Func _CheckPID($aMode = False)
 	Local Const $sDatFile = $sTemp & '\TempPID.dat'
 	Local $hOpen = FileOpen($sDatFile, 0)
 	If $hOpen <= 0 Then Return False
-	Local $sPID = _GetLine(FileRead($hOpen))
+	Local $sPID = _GetLine(FileRead($hOpen)), $aPID
 	FileClose($hOpen)
-	For $n = 1 To $sPID[0]
-		If ProcessExists($sPID[$n]) Then
-			If StringInStr($nList, _ProcessName($sPID[$n])) Then Return True
+	$aMode = $aMode ? 1 : 2
+	For $n = $aMode To $sPID[0]
+		$aPID = StringSplit($sPID[$n], @TAB)
+		If ProcessExists($aPID[2]) Then
+			If StringInStr($aPID[1], _ProcessName($aPID[2])) Then Return True
 		EndIf
 	Next
 	FileDelete($sDatFile)
 	Return False
 EndFunc   ;==>_CheckPID
-Func _ClosePID()
-	Local Const $nList = 'cmd.exe, ' & _isCustomApplication()
+Func _ClosePID($aMode = False)
 	Local Const $sDatFile = $sTemp & '\TempPID.dat'
 	Local $hOpen = FileOpen($sDatFile, 0)
 	If $hOpen <= 0 Then Return False
-	Local $sPID = _GetLine(FileRead($hOpen))
+	Local $sPID = _GetLine(FileRead($hOpen)), $aPID
 	FileClose($hOpen)
-	For $n = 1 To $sPID[0]
-		If ProcessExists($sPID[$n]) Then
-			If StringInStr($nList, _ProcessName($sPID[$n])) Then ProcessClose($sPID[$n])
+	FileDelete($sDatFile)
+	For $n = 2 To $sPID[0]
+		$aPID = StringSplit($sPID[$n], @TAB)
+		If ProcessExists($aPID[2]) Then
+			If StringInStr($aPID[1], _ProcessName($aPID[2])) Then ProcessClose($aPID[2])
 		EndIf
 	Next
-	FileDelete($sDatFile)
+	If $aMode Then
+		$aPID = StringSplit($sPID[1], @TAB)
+		If ProcessExists($aPID[2]) Then
+			If StringInStr($aPID[1], _ProcessName($aPID[2])) Then ProcessClose($aPID[2])
+		EndIf
+	EndIf
 	Return True
 EndFunc   ;==>_ClosePID
 Func _isCustomApplication()
@@ -250,17 +266,17 @@ Func _AutoRun()
 	If IniRead($_ConfigFile, 'Config', 'Auto_Run', 0) > 0 Then _RunProxy()
 EndFunc   ;==>_AutoRun
 Func _Console($sStr)
-	Local $iItem = _GUICtrlListView_GetItemCount($FORM[8])
+	Local $iItem = _GUICtrlListView_GetItemCount($FORM[9])
 	Local $iLen = StringLen($sStr)
 	_GUICtrlListView_InsertItem_Optim($FORM[3], $sStr)
-	;_GUICtrlListView_AddItem($FORM[8], $sStr)
-	_GUICtrlListView_EnsureVisible($FORM[8], $iItem)
+	;_GUICtrlListView_AddItem($FORM[9], $sStr)
+	_GUICtrlListView_EnsureVisible($FORM[9], $iItem)
 	If $iLen > $iLineSize Then
-		_GUICtrlListView_SetColumnWidth($FORM[8], 0, $LVSCW_AUTOSIZE_USEHEADER)
+		_GUICtrlListView_SetColumnWidth($FORM[9], 0, $LVSCW_AUTOSIZE_USEHEADER)
 		$iLineSize = $iLen
 	EndIf
 	If IniRead($_ConfigFile, 'Config', 'Auto_Clear_Console', 0) > 0 Then
-		If IniRead($_ConfigFile, 'Config', 'Auto_Clear_When', 0) <= $iItem Then _GUICtrlListView_DeleteAllItems($FORM[8])
+		If IniRead($_ConfigFile, 'Config', 'Auto_Clear_When', 0) <= $iItem Then _GUICtrlListView_DeleteAllItems($FORM[9])
 	EndIf
 EndFunc   ;==>_Console
 Func _GUICtrlListView_Init_Optim()
@@ -333,22 +349,22 @@ Func WM_NOTIFY($hWnd, $iMsg, $iwParam, $ilParam)
 	$iIDFrom = DllStructGetData($tNMHDR, "IDFrom")
 	$iCode = DllStructGetData($tNMHDR, "Code")
 	Switch $hWndFrom
-		Case $FORM[8]
+		Case $FORM[9]
 			Switch $iCode
 				Case $NM_RCLICK
 					$tInfo = DllStructCreate($tagNMITEMACTIVATE, $ilParam)
-					$index = _GUICtrlListView_GetSelectedCount($FORM[8])
+					$index = _GUICtrlListView_GetSelectedCount($FORM[9])
 					If $index <= 0 Then Return
 					Local $hMenu = _GUICtrlMenu_CreatePopup(), $idCopy
-					$index = _GUICtrlListView_GetSelectedIndices($FORM[8])
+					$index = _GUICtrlListView_GetSelectedIndices($FORM[9])
 					_GUICtrlMenu_AddMenuItem($hMenu, "Copy", $idCopy)
-					Switch _GUICtrlMenu_TrackPopupMenu($hMenu, $FORM[8], -1, -1, 1, 1, 2)
+					Switch _GUICtrlMenu_TrackPopupMenu($hMenu, $FORM[9], -1, -1, 1, 1, 2)
 						Case $idCopy
 							$idCopy = ''
 							$index = StringSplit($index, '|')
-							;ClipPut(_GUICtrlListView_GetItemText($FORM[8], DllStructGetData($tInfo, "Index"), DllStructGetData($tInfo, "SubItem")))
+							;ClipPut(_GUICtrlListView_GetItemText($FORM[9], DllStructGetData($tInfo, "Index"), DllStructGetData($tInfo, "SubItem")))
 							For $x = 1 To $index[0]
-								$idCopy &= _GUICtrlListView_GetItemText($FORM[8], $index[$x]) & @CRLF
+								$idCopy &= _GUICtrlListView_GetItemText($FORM[9], $index[$x]) & @CRLF
 							Next
 							ClipPut($idCopy)
 					EndSwitch
@@ -390,7 +406,7 @@ Func _GetPathName($sStr, $iMode = 0)
 	Return ''
 EndFunc   ;==>_GetPathName
 Func _PrintConsole()
-	If _GUICtrlListView_GetItemCount($FORM[8]) = 0 Then
+	If _GUICtrlListView_GetItemCount($FORM[9]) = 0 Then
 		_Metro_MsgBox(0, $FORM[0], "No any data in console for print now :/", 400, 11, $FORM[1])
 		Return False
 	EndIf
@@ -399,8 +415,8 @@ Func _PrintConsole()
 		$_FileExtension = StringRegExpReplace($hFile, "^(?:.*\\[^\\]*?)(\.[^.]+)?$", '\1')
 		If @error Or $_FileExtension = '' Then $hFile = $hFile & '.log'
 		$hOpen = FileOpen($hFile, 10)
-		For $i = 0 To _GUICtrlListView_GetItemCount($FORM[8]) - 1
-			FileWrite($hOpen, _GUICtrlListView_GetItemTextString($FORM[8], $i) & @CRLF)
+		For $i = 0 To _GUICtrlListView_GetItemCount($FORM[9]) - 1
+			FileWrite($hOpen, _GUICtrlListView_GetItemTextString($FORM[9], $i) & @CRLF)
 		Next
 		FileClose($hOpen)
 		Return True
@@ -408,8 +424,8 @@ Func _PrintConsole()
 	Return False
 EndFunc   ;==>_PrintConsole
 Func _ClearConsole()
-	If _GUICtrlListView_GetItemCount($FORM[8]) > 0 Then
-		If _Metro_MsgBox(4, $FORM[0], "Do you sure to clear this console?", 400, 11, $FORM[1]) = 'Yes' Then _GUICtrlListView_DeleteAllItems($FORM[8])
+	If _GUICtrlListView_GetItemCount($FORM[9]) > 0 Then
+		If _Metro_MsgBox(4, $FORM[0], "Do you sure to clear this console?", 400, 11, $FORM[1]) = 'Yes' Then _GUICtrlListView_DeleteAllItems($FORM[9])
 	Else
 		_Metro_MsgBox(0, $FORM[0], "No any data in console for clear now :x", 400, 11, $FORM[1])
 	EndIf
@@ -544,65 +560,81 @@ Func _Module_Open()
 EndFunc   ;==>_Module_Open
 Func _Module_Close()
 	$Module = ''
+	_GUICtrlListView_DeleteAllItems($FORM3[7])
 	GUISetState(@SW_HIDE, $FORM3[1])
 EndFunc   ;==>_Module_Close
 Func _Modules_All_Disable()
+	Local $path
 	For $m = 1 To $Module[0]
-		$path = _GetPathName($Module[$m], 1) & '_' & _GetPathName($Module[$m])
-		If StringInStr(FileGetAttrib($Module[$m]), 'D') Then
-			DirMove($Module[$m], $path)
-		Else
-			FileMove($Module[$m], $path)
+		$path = _GetPathName($Module[$m])
+		If StringLeft($path, 1) <> '_' Then
+			$path = _GetPathName($Module[$m], 1) & '_' & $path
+			If StringInStr(FileGetAttrib($Module[$m]), 'D') Then
+				DirMove($Module[$m], $path)
+			Else
+				FileMove($Module[$m], $path)
+			EndIf
+			$Module[$m] = $path
+			_GUICtrlListView_SetItemChecked($FORM3[7], $m - 1, False)
 		EndIf
-		$Module[$m] = $path
 	Next
-	_Modules_Get()
 EndFunc   ;==>_Modules_All_Disable
 Func _Modules_All_Enable()
+	Local $path
 	For $m = 1 To $Module[0]
-		$path = _GetPathName($Module[$m], 1) & StringReplace(_GetPathName($Module[$m]), '_', '')
-		If StringInStr(FileGetAttrib($Module[$m]), 'D') Then
-			DirMove($Module[$m], $path)
-		Else
-			FileMove($Module[$m], $path)
+		$path = _GetPathName($Module[$m])
+		If StringLeft($path, 1) = '_' Then
+			$path = _GetPathName($Module[$m], 1) & StringReplace(_GetPathName($Module[$m]), '_', '')
+			If StringInStr(FileGetAttrib($Module[$m]), 'D') Then
+				DirMove($Module[$m], $path)
+			Else
+				FileMove($Module[$m], $path)
+			EndIf
+			$Module[$m] = $path
+			_GUICtrlListView_SetItemChecked($FORM3[7], $m - 1)
 		EndIf
-		$Module[$m] = $path
 	Next
-	_Modules_Get()
 EndFunc   ;==>_Modules_All_Enable
 Func _Modules_Get()
-	If Not FileExists('bin\node_modules') Then Return
+	If Not FileExists($_Module) Then Return
 	_GUICtrlListView_DeleteAllItems($FORM3[7])
-	Local $mList = _FileListToArrayEx('bin\node_modules', '*', 3)
-	$Module = _FileListToArrayEx('bin\node_modules', '*', 8)
-	Local $iLen = 0, $tLen = 0
-	For $m = 1 To $mList[0]
+	$Module = _FileListToArrayEx($_Module, '*', 8)
+	Local $iLen = 0, $tLen = 0, $path
+	For $m = 1 To $Module[0]
+		$path = _GetPathName($Module[$m])
 		;_GUICtrlListView_AddItem($FORM3[7], StringLeft($mList[$m], 1) = '_' ? StringReplace(_GetPathName($Module[$m]), '_', '') : $mList[$m])
-		_GUICtrlListView_InsertItem_Optim($FORM3[2], StringLeft($mList[$m], 1) = '_' ? StringReplace(_GetPathName($Module[$m]), '_', '') : $mList[$m])
-		If StringLeft($mList[$m], 1) = '_' Then
+		_GUICtrlListView_InsertItem_Optim($FORM3[2], StringLeft($path, 1) = '_' ? StringReplace($path, '_', '') : $path)
+		If StringLeft($path, 1) = '_' Then
 			_GUICtrlListView_SetItemChecked($FORM3[7], $m - 1, False)
 		Else
 			_GUICtrlListView_SetItemChecked($FORM3[7], $m - 1)
 		EndIf
 		_GUICtrlListView_EnsureVisible($FORM3[7], _GUICtrlListView_GetItemCount($FORM3[7]) - 1)
-		$iLen = StringLen($mList[$m])
+		$iLen = StringLen($path)
 		If $iLen > $tLen Then
 			_GUICtrlListView_SetColumnWidth($FORM3[7], 0, $LVSCW_AUTOSIZE_USEHEADER)
 			$tLen = $iLen
 		EndIf
 	Next
 EndFunc   ;==>_Modules_Get
-Func _isRunning()
-	Local $pList = ProcessList(@ScriptName)
-	Return $pList[0][0] > 1
-EndFunc   ;==>_isRunning
-Func _closeRunning()
-	Local $pList = ProcessList(@ScriptName)
-	For $i = 1 To $pList[0][0]
-		If @AutoItPID <> $pList[$i][1] Then ProcessClose($pList[$i][1])
-	Next
-	If _CheckPID() Then _ClosePID()
-EndFunc   ;==>_closeRunning
+Func _HostsFileOpen()
+	Local $path = @SystemDir & '\Drivers\Etc\hosts'
+	Local $hOpen = FileOpen($path, 0 + FileGetEncoding($path))
+	GUICtrlSetData($FORM4[2], FileRead($hOpen, FileGetSize($path)))
+	FileClose($hOpen)
+	GUISetState(@SW_SHOW, $FORM4[1])
+EndFunc   ;==>_HostsFileOpen
+Func _HostFileClose()
+	GUICtrlSetData($FORM4[2], '')
+	GUISetState(@SW_HIDE, $FORM4[1])
+EndFunc   ;==>_HostFileClose
+Func _HostFileSave()
+	Local $path = @SystemDir & '\Drivers\Etc\hosts'
+	Local $hOpen = FileOpen($path, 10 + FileGetEncoding($path))
+	FileWrite($hOpen, GUICtrlRead($FORM4[2]))
+	FileClose($hOpen)
+	GUISetState(@SW_HIDE, $FORM4[1])
+EndFunc   ;==>_HostFileSave
 Func _isProxyRun()
 	Local $pList = ProcessList(_isCustomApplication())
 	Return $pList[0][0] > 1
@@ -620,6 +652,8 @@ Func _ClearGUI()
 	_Metro_GUIDelete($FORM[1])
 	_Metro_GUIDelete($FORM2[1])
 	_Metro_GUIDelete($FORM3[1])
+	_Metro_GUIDelete($FORM4[1])
+	ProcessClose(@AutoItPID)
 	Exit
 EndFunc   ;==>_ClearGUI
 Func _ForceClose($hWndGUI, $MsgID, $wParam, $lParam)
@@ -628,13 +662,13 @@ Func _ForceClose($hWndGUI, $MsgID, $wParam, $lParam)
 	Return True
 EndFunc   ;==>_ForceClose
 Func _About()
-	_Metro_MsgBox(0, $FORM[0], "Kappa :v" & @CRLF & @CRLF & "Version: 2.2" & @CRLF & 'Create by: Fukki' & @CRLF & 'Github: https://github.com/Fukki/Tera-Proxy-Gui/', 400, 11, $FORM[1])
+	_Metro_MsgBox(0, $FORM[0], "Kappa :v" & @CRLF & @CRLF & "Version: 2.3" & @CRLF & 'Create by: Fukki' & @CRLF & 'Github: https://github.com/Fukki/Tera-Proxy-Gui/', 400, 11, $FORM[1])
 EndFunc   ;==>_About
 Func _EXIT()
 	If $_isStarted Then
 		If _Metro_MsgBox(4, $FORM[0], "Tera Proxy is now running..." & @CRLF & "Do you sure to exit now?", 400, 11, $FORM[1]) <> 'Yes' Then Return
+		_ClosePID()
 	EndIf
-	If $_isStarted Then _ClosePID()
 	_ClearGUI()
 EndFunc   ;==>_EXIT
 While Sleep(250)
