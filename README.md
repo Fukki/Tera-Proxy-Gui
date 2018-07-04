@@ -42,4 +42,4 @@ Electron include "node_modules\electron\dist\electron.exe start.js"<br/>
 - 2.0 Add node.exe and custom application running trigger :x
 - 2.1 Revert Fix Gui, Fixed tera proxy gui can't start after if run from another program
 - 2.2 Removed old concole copy in Fix Gui function, Fixed multiple run GUI and Proxy.
-- 2.3 Expand GUI console, Fixed multiple run GUI and Proxy again @_@, Added hosts button for edit hosts file.
+- 2.3 Expand GUI console, Fixed multiple run GUI and Proxy again @_@, Fixed modules enable/disable function, Added hosts button for edit hosts file.
