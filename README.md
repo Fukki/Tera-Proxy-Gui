@@ -38,8 +38,9 @@ Electron include "node_modules\electron\dist\electron.exe start.js"<br/>
 - 1.6 Fixed CPU used when peak data load from tera proxy into GUI, Fixed Fix GUI function now can select keep or clean console, Fixed GUI change position to top when minimize<br/>
 - 1.7 Fixed when press close proxy button then GUI are closed WTF, Fixed GUI header cant resize now :x, Fixed GUI close when click without any module in list, Fixed console speed when peak data (maybe?), Added Clear Console button, Added right click menu to Copy console only 1 line like Ctrl+C so you need Ctrl+v to paste it :p<br/>
 - 1.8 Fixed GUI broke on windows 10, Impoved console speed when peak data again :v, Fixed Close Proxy button not work when Start Proxy with wrong parameter, Added multi-select and copy for console<br/>
-- 1.9 Fixed Auto clear console, Fixex process wait timeout for potato computer :/, Moved Proxy_GUI.ini to bin, Rename Electron_Use -> Custom_Application_Use and Electron_Name -> Custom_Application_NAME , Cleaned some code that reduce by 1 kb so look very nice kappa :v
-- 2.0 Add node.exe and custom application running trigger :x
-- 2.1 Revert Fix Gui, Fixed tera proxy gui can't start when run from another application
-- 2.2 Removed old concole copy in Fix Gui function, Fixed multiple run GUI and Proxy.
-- 2.3 Expand GUI console, Fixed multiple run GUI and Proxy again @_@, Fixed modules enable/disable function, Added hosts button for edit hosts file.
+- 1.9 Fixed Auto clear console, Fixex process wait timeout for potato computer :/, Moved Proxy_GUI.ini to bin, Rename Electron_Use -> Custom_Application_Use and Electron_Name -> Custom_Application_NAME , Cleaned some code that reduce by 1 kb so look very nice kappa :v<br/>
+- 2.0 Add node.exe and custom application running trigger :x<br/>
+- 2.1 Revert Fix Gui, Fixed tera proxy gui can't start when run from another application<br/>
+- 2.2 Removed old concole copy in Fix Gui function, Fixed multiple run GUI and Proxy.<br/>
+- 2.3 Expand GUI console, Fixed multiple run GUI and Proxy again @_@, Fixed modules enable/disable function, Added hosts button for edit hosts file.<br/>
+- 2.4 Added module auto-update list this prepare for next version :v. Added Map Protocol file open, Moved Host button to Menu, Fixed region setting without config.josn, Added button Map Protocol and Host File to tray icon
