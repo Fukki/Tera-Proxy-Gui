@@ -45,4 +45,5 @@ Electron include "node_modules\electron\dist\electron.exe start.js"<br/>
 - 2.3 Expand GUI console, Fixed multiple run GUI and Proxy again @_@, Fixed modules enable/disable function, Added hosts button for edit hosts file.<br/>
 - 2.4 Added module auto-update list this prepare for next version :v. Added Map Protocol file open, Moved Host button to Menu, Fixed region setting without config.josn, Added button Map Protocol and Host File to tray icon<br/>
 - 2.5 Fixed Fix Gui function again fak, Fixed module Enable/Disable in gui module function, Added Enable/Disable auto-update in gui module function<br/>
-- 2.5a - 2.5b Fixed GUI module function disable/enable with out checked :c
+- 2.5a - 2.5b Fixed GUI module function disable/enable with out checked :c<br/>
+- 2.5d nothing change just fix console after use Gui Fix function D:
