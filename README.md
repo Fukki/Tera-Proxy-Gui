@@ -32,7 +32,7 @@ Electron include "node_modules\electron\dist\electron.exe start.js"<br/>
 Caali next-gen proxy change run to "node bin\index.js"<br/>
 
 # Noted module manager
-dont faster checked and unchecked you will got checked<br/>
+dont faster checked and unchecked you will got checked stuck<br/>
 if you got bug just press Refresh and see again<br/>
 
 **Update**<br/>
