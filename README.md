@@ -30,3 +30,6 @@ Electron include "node_modules\electron\dist\electron.exe start.js"<br/>
 
 **Update**<br/>
 - 2.5f fixed exit GUI
+
+# Noted
+Caali next-gen proxy change run to "node bin\index.js"
