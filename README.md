@@ -1,9 +1,3 @@
-# Noted
-Caali next-gen proxy change run to "node bin\index.js"
-
-# Noted module manager
-- dont faster checked and unchecked you will got checked bug just press Refresh and see again
-
 **Just Kappa :v**<br/>
 
 **Download**<br/>
@@ -33,6 +27,13 @@ Caali "node bin\index.js"<br/>
 Electron include "node_modules\electron\dist\electron.exe start.js"<br/>
 
 ![image](https://user-images.githubusercontent.com/26898177/38706013-d5fb1110-3ed5-11e8-9951-77a8fa43a441.png)
+
+# Noted
+Caali next-gen proxy change run to "node bin\index.js"<br/>
+
+# Noted module manager
+dont faster checked and unchecked you will got checked<br/>
+if you got bug just press Refresh and see again<br/>
 
 **Update**<br/>
 - 2.5f fixed exit GUI
