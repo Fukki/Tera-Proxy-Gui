@@ -1,6 +1,9 @@
 # Noted
 Caali next-gen proxy change run to "node bin\index.js"
 
+# Noted module manager
+- dont faster checked and unchecked you will got checked bug just press Refresh and see again
+
 **Just Kappa :v**<br/>
 
 **Download**<br/>
