@@ -33,3 +33,4 @@ Electron include "node_modules\electron\dist\electron.exe start.js"<br/>
 
 **Update**<br/>
 - 2.5f fixed exit GUI
+- 2.5g changed module manager path from "bin\node_modules" to "mods\"
