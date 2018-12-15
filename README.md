@@ -28,12 +28,12 @@ Electron include "node_modules\electron\dist\electron.exe start.js"<br/>
 
 ![image](https://user-images.githubusercontent.com/26898177/38706013-d5fb1110-3ed5-11e8-9951-77a8fa43a441.png)
 
-# Noted
+Noted
 Caali next-gen proxy change run to "node bin\index.js"<br/>
 
-# Noted module manager
+Noted module manager
 dont faster checked and unchecked you will got checked stuck<br/>
-if you got bug just press Refresh and see again<br/>
+if you got this stuck just press Refresh and try again<br/>
 
 **Update**<br/>
 - 2.5f Fixed exit GUI
