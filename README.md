@@ -36,6 +36,7 @@ dont faster checked and unchecked you will got checked stuck<br/>
 if you got bug just press Refresh and see again<br/>
 
 **Update**<br/>
-- 2.5f fixed exit GUI
-- 2.5g changed module manager path from "bin\node_modules" to "mods\"
-- 2.5g fixed cant read config.json in caali nextgen and module manager
+- 2.5f Fixed exit GUI
+- 2.5g Changed module manager path from "bin\node_modules" to "mods\"
+- 2.5g Fixed cant read config.json in caali nextgen and module manager
+- 2.5i Fixed missing error from proxy console now GUI can showed same proxy console :3
