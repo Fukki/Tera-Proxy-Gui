@@ -22,16 +22,13 @@ https://github.com/Fukki/Tera-Proxy-Gui/releases
 
 - Click menu on top left then select setting<br/>
 For Run parameter you need make path to "proxy.js" or "index.js" or "start.js"<br/>
-Pinkie "node bin/lib/proxy.js"<br/>
-Caali "node bin\index.js"<br/>
+Pinkie "node --use-strict bin\cli\index.js"<br/>
+Caali "node --use-strict bin\index.js"<br/>
 Electron include "node_modules\electron\dist\electron.exe start.js"<br/>
 
 ![image](https://user-images.githubusercontent.com/26898177/38706013-d5fb1110-3ed5-11e8-9951-77a8fa43a441.png)
 
-Noted
-Caali next-gen proxy change run to "node bin\index.js"<br/>
-
-Noted module manager
+**Noted module manager**
 dont faster checked and unchecked you will got checked stuck<br/>
 if you got this stuck just press Refresh and try again<br/>
 
@@ -40,3 +37,4 @@ if you got this stuck just press Refresh and try again<br/>
 - 2.5g Changed module manager path from "bin\node_modules" to "mods\"
 - 2.5g Fixed cant read config.json in caali nextgen and module manager
 - 2.5i Fixed GUI missing error text from proxy console, now GUI can get all same proxy console :3
+- 2.5j update for support Pinkie, noted please read in **How to use** for run command
